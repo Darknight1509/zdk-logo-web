@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZDK Logo 水印合成工具</title>
+  <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📷 ZDK Logo 水印合成</h1>
+      <p>上传照片，选择Logo，自动合成带EXIF信息的品牌水印照片</p>
+    </header>
+
+    <main class="app-grid">
+      <!-- 左侧：Logo 选取 -->
+      <section class="panel logo-panel">
+        <h2>① 选择 Logo</h2>
+        <div class="logo-grid" id="logoGrid">
+          <div class="loading">加载 Logo 中...</div>
+        </div>
+      </section>
+
+      <!-- 中间：上传 + 预览 -->
+      <section class="panel upload-panel">
+        <h2>② 上传照片</h2>
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-zone-content" id="dropContent">
+            <div class="drop-icon">📁</div>
+            <p>拖拽照片到这里，或点击选择</p>
+            <p class="hint">支持 JPG / PNG / WebP / TIFF，最大 50MB</p>
+          </div>
+          <div class="preview-area" id="previewArea" style="display:none">
+            <img id="previewImage" src="" alt="预览">
+            <button class="btn-change" id="changePhotoBtn">更换照片</button>
+          </div>
+          <input type="file" id="fileInput" accept="image/*" style="display:none">
+        </div>
+
+        <div class="exif-info" id="exifInfo" style="display:none">
+          <h3>📋 EXIF 信息</h3>
+          <div id="exifFields"></div>
+        </div>
+
+        <div class="input-row">
+          <input type="checkbox" id="useModelCb" class="field-cb" checked>
+          <label for="modelInput" class="field-label">📷 机型</label>
+          <input type="text" id="modelInput" placeholder="EXIF 未找到" disabled>
+          <span class="mode-badge" id="modelBadge">EXIF</span>
+        </div>
+        <div class="input-row">
+          <input type="checkbox" id="useLensCb" class="field-cb" checked>
+          <label for="lensInput" class="field-label">📎 镜头</label>
+          <input type="text" id="lensInput" placeholder="EXIF 未找到" disabled>
+          <span class="mode-badge" id="lensBadge">EXIF</span>
+        </div>
+        <div class="input-row">
+          <input type="checkbox" id="useExposureCb" class="field-cb" checked>
+          <label for="exposureInput" class="field-label">⚙️ 参数</label>
+          <input type="text" id="exposureInput" placeholder="EXIF 未找到" disabled>
+          <span class="mode-badge" id="exposureBadge">EXIF</span>
+        </div>
+        <div class="input-row">
+          <input type="checkbox" id="useDatetimeCb" class="field-cb" checked>
+          <label for="datetimeInput" class="field-label">🕐 时间</label>
+          <input type="text" id="datetimeInput" placeholder="EXIF 未找到" disabled>
+          <span class="mode-badge" id="datetimeBadge">EXIF</span>
+        </div>
+      </section>
+
+      <!-- 右侧：操作 -->
+      <section class="panel action-panel">
+        <h2>③ 生成下载</h2>
+        <button class="btn-generate" id="generateBtn" disabled>
+          ⚡ 生成水印照片
+        </button>
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="progress-status" id="progressStatus"></div>
+        </div>
+        <div class="result-area" id="resultArea" style="display:none">
+          <h3>✅ 生成完成</h3>
+          <div class="result-preview">
+            <img id="resultImage" src="" alt="水印预览" style="max-width:100%; border-radius:6px;">
+          </div>
+          <div style="margin-top:12px; text-align:center;">
+            <a class="btn-download" id="downloadLink" download>⬇ 下载水印图片</a>
+          </div>
+          <p class="result-hint">💡 原图所有 HDR/Gainmap/ICC/EXIF 元数据完整保留。</p>
+        </div>
+        <div class="error-msg" id="errorMsg" style="display:none"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
